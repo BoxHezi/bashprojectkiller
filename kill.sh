@@ -12,11 +12,18 @@ function search_pid() {
     # remove pid which for this script and grep
     declare -r local id_limit=$((id_count-ignore_num))
 
-    for (( i=0; i<$id_limit; i++))
-    do
-        echo "Killing ${id_list[i]}"
-        sudo kill -9 ${id_list[i]}
-    done
+    if [[ $id_limit == 0 ]]; then
+        echo "No such a program!"
+        echo "Exiting..."
+        exit 1
+    else
+        for (( i=0; i<$id_limit; i++))
+        do
+            echo "Killing ${id_list[i]}"
+            sudo kill -9 ${id_list[i]}
+        done
+    fi
+    
 }
 
 function check_root() {
